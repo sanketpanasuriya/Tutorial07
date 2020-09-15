@@ -1,6 +1,7 @@
 package com.example.tutorial07;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -9,8 +10,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
@@ -21,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     ConstraintLayout lytWelcome;
+    AlertDialog.Builder builder;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,12 +97,32 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void mnu_onClick(){
-        editor.remove("isLogin");
-        editor.remove("Username");
-        editor.commit();
-        Intent intent = new Intent(MainActivity.this,LoginActivity.class);
-        startActivity(intent);
-        finish();
+        new AlertDialog.Builder(this).setTitle("Logout")
+                .setCancelable(false)
+                .setMessage("Do you want to logout?")
+                .setPositiveButton("Logout", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        editor.remove("isLogin");
+                        editor.remove("Username");
+                        editor.commit();
+                        Toast.makeText(getApplicationContext(),"Logout successfully",Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(MainActivity.this,LoginActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                })
+                .setNegativeButton("Stay Login", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                }).show();
+        //AlertDialog alert = builder.create();
+        //alert.setTitle("Logout");
+        //alert.show();
+
+
     }
 
 }

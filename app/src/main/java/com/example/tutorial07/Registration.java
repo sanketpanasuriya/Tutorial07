@@ -55,8 +55,8 @@ public class Registration extends AppCompatActivity {
      void checkDataEntered(){
         String firstname,lastname,username,password,branch,gender,city,status;
         int count=0;
-         genderID = Gender.getCheckedRadioButtonId();
-         selectedGender = findViewById(genderID);
+        genderID = Gender.getCheckedRadioButtonId();
+        selectedGender = findViewById(genderID);
         firstname = fname.getText().toString();
         lastname = lname.getText().toString();
         username = uname.getText().toString();
@@ -70,40 +70,50 @@ public class Registration extends AppCompatActivity {
             Toast t = Toast.makeText(this,"You must enter Firstname",Toast.LENGTH_SHORT);
             t.show();
             count++;
+            return;
         }
         if(isEmpty(lname)){
             Toast t = Toast.makeText(this,"You must enter Lastname",Toast.LENGTH_SHORT);
             t.show();
             count++;
+            return;
         }
         if(isEmpty(uname)){
             Toast t = Toast.makeText(this,"You must enter email as Username",Toast.LENGTH_SHORT);
             t.show();
             count++;
+            return;
         }
         if(isEmpty(Password)){
             Toast t = Toast.makeText(this,"You must enter password",Toast.LENGTH_SHORT);
             t.show();
             count++;
+            return;
         }
         if(city.equals("Select City")){
             Toast t = Toast.makeText(this,"You must select city",Toast.LENGTH_SHORT);
             t.show();
             count++;
+            return;
+        }
+        if(password.length() < 8){
+            Toast.makeText(this,"Password must be greater then 8",Toast.LENGTH_SHORT).show();
+            return;
         }
         if(!isEmail(uname)){
             uname.setError("Please Enter valide email");
             Toast t = Toast.makeText(this,"Please Enter valid Email",Toast.LENGTH_SHORT);
             t.show();
+            return;
         }else if(count==0){
             if(myDB.insertData(firstname,lastname,username,password,branch,gender,city,status)) {
-                Toast t = Toast.makeText(this,"Data instered successfully",Toast.LENGTH_LONG);
+                Toast t = Toast.makeText(this,"Data inserted successfully",Toast.LENGTH_LONG);
                 t.show();
                 Intent intent = new Intent(Registration.this, LoginActivity.class);
                 startActivity(intent);
                 finish();
             }else {
-                Toast t = Toast.makeText(this,"Something went wrong",Toast.LENGTH_SHORT);
+                Toast t = Toast.makeText(this,"Username is already exists",Toast.LENGTH_SHORT);
                 t.show();
             }
         }

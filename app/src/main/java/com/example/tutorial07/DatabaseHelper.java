@@ -28,7 +28,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table "+TABLE_NAME+"("+COL_1+" INTEGER PRIMARY KEY AUTOINCREMENT ,"+COL_2+" TEXT ,"+COL_3+" TEXT ,"+COL_4+" TEXT unique ,"+COL_5+" TEXT ,"+COL_6+" TEXT ,"+COL_7+" TEXT ,"+COL_8+" TEXT ,"+COL_9+" TEXT )");
+        db.execSQL("create table if not exists "+TABLE_NAME+"("+COL_1+" INTEGER PRIMARY KEY AUTOINCREMENT ,"+COL_2+" TEXT ,"+COL_3+" TEXT ,"+COL_4+" TEXT unique ,"+COL_5+" TEXT ,"+COL_6+" TEXT ,"+COL_7+" TEXT ,"+COL_8+" TEXT ,"+COL_9+" TEXT )");
     }
 
     @Override
@@ -59,6 +59,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String[] selectionArgs = {Username,password};
         Cursor cursor = db.query(TABLE_NAME,columns,selection,selectionArgs,null,null,null);
         if(cursor.getCount()==1){
+            cursor.close();
             return true;
         }
         return false;

@@ -13,7 +13,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.regex.Pattern;
 
 public class LoginActivity extends AppCompatActivity {
     DatabaseHelper myDB;
@@ -39,6 +38,7 @@ public class LoginActivity extends AppCompatActivity {
         if(sharedPreferences.contains("isLogin")){
             Intent intent = new Intent(LoginActivity.this,MainActivity.class);
             startActivity(intent);
+            finish();
         }
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
